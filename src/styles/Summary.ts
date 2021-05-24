@@ -35,6 +35,8 @@ export const SubContainer = styled.div`
     margin: 0 auto;
     height: 70vw;
     width: 70vw;
+    max-width: 300px;
+    max-height: 300px;
     background-color: ${E_COLOR.GREY};
     border-radius: 50%;
     border: 6px solid ${E_COLOR.DARK_BROWN};
