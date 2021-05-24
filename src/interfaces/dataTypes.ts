@@ -15,4 +15,12 @@ export enum E_COLOR {
     RED = "#750909",
     GREEN = "#1f3a33",
     GREY = "#fafafa",
+    DISABLED = "#616161",
+}
+
+export enum E_ACTIONS {
+    FETCH_MENU_LIST = "FETCH_MENU_LIST",
+    FETCH_MERCHANT_LIST = "FETCH_MERCHANT_LIST",
+    ADD_SELECTED_MENU_LIST = "ADD_SELECTED_MENU_LIST",
+    POST_ORDER = "POST_ORDER",
 }

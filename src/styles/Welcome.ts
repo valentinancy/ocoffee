@@ -12,12 +12,12 @@ export const Container = styled.div`
 `;
 
 export const LogoImg = styled.img`
-    width: 100px;
+    width: 200px;
 `;
 
 export const Brand = styled.div`
     margin: 12px 0;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: ${E_FONT_WEIGHT.BOLD};
     color: ${E_COLOR.DARK_BROWN};
     font-family: cursive;

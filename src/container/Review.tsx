@@ -15,8 +15,16 @@ import {
     SectionContainer,
     ItemContainer,
 } from "../styles/Review";
+import { useReviewHook } from "../hooks/Review";
 
 const Review = () => {
+    const {
+        handleInput,
+        handleCheckout,
+        selectedMenuList,
+        merchantList,
+        purchaseDetail,
+    } = useReviewHook();
     return (
         <Container>
             <Header>Customer Details</Header>
@@ -26,23 +34,41 @@ const Review = () => {
             <SectionContainer>
                 <InputWrapper>
                     <Label>Name</Label>
-                    <Input />
+                    <Input
+                        onChange={(e) => handleInput("name", e.target.value)}
+                    />
                 </InputWrapper>
                 <InputWrapper>
                     <Label>Phone</Label>
-                    <Input />
+                    <Input
+                        type="number"
+                        onChange={(e) => handleInput("phone", e.target.value)}
+                    />
                 </InputWrapper>
                 <InputWrapper>
                     <Label>Merchant</Label>
-                    <Dropdown>
-                        <Option>fgsdg</Option>
-                        <Option>adfa</Option>
-                        <Option>asdfaf</Option>
+                    <Dropdown
+                        onChange={(e) =>
+                            handleInput("merchant", e.target.value)
+                        }
+                    >
+                        {merchantList.map(
+                            (merchant: { _id: string; name: string }) => {
+                                const { _id, name } = merchant;
+                                return (
+                                    <Option key={_id} value={name}>
+                                        {name}
+                                    </Option>
+                                );
+                            }
+                        )}
                     </Dropdown>
                 </InputWrapper>
                 <InputWrapper>
                     <Label>Notes</Label>
-                    <InputArea />
+                    <InputArea
+                        onChange={(e) => handleInput("notes", e.target.value)}
+                    />
                 </InputWrapper>
             </SectionContainer>
 
@@ -50,23 +76,29 @@ const Review = () => {
                 <Header>Items purchased.</Header>
                 <SubHeader>Please confirm your order below.</SubHeader>
                 <ItemContainer>
-                    <ItemWrapper>
-                        <ItemDetail>Ice Americano</ItemDetail>
-                        <ItemDetail>x1</ItemDetail>
-                    </ItemWrapper>
-
-                    <ItemWrapper>
-                        <ItemDetail>Ice Americano</ItemDetail>
-                        <ItemDetail>x1</ItemDetail>
-                    </ItemWrapper>
-
-                    <ItemWrapper>
-                        <ItemDetail>Ice Americano</ItemDetail>
-                        <ItemDetail>x1</ItemDetail>
-                    </ItemWrapper>
+                    {selectedMenuList.map(
+                        (
+                            menu: { name: string; quantity: number },
+                            index: number
+                        ) => {
+                            const { name, quantity } = menu;
+                            return (
+                                <ItemWrapper key={index}>
+                                    <ItemDetail>{name}</ItemDetail>
+                                    <ItemDetail>x{quantity}</ItemDetail>
+                                </ItemWrapper>
+                            );
+                        }
+                    )}
                 </ItemContainer>
             </SectionContainer>
-            <FloatingButton isFinalButton={true} />
+            <FloatingButton
+                isFinalButton={true}
+                handleClicked={handleCheckout}
+                isDisabled={
+                    purchaseDetail.name === "" || purchaseDetail.phone === 0
+                }
+            />
         </Container>
     );
 };

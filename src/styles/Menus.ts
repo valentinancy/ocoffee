@@ -35,3 +35,8 @@ export const SubContainer = styled.div`
     background-color: ${E_COLOR.DARK_BROWN};
     border-top-right-radius: 40px;
 `;
+
+export const Loader = styled.img`
+    height: 50px;
+    margin: 100px auto;
+`;

@@ -1,9 +1,25 @@
 import React from "react";
 import Card from "../components/Card";
 import FloatingButton from "../components/FloatingButton";
-import { Container, SubContainer, Title, Message } from "../styles/Menus";
+import {
+    Container,
+    SubContainer,
+    Title,
+    Message,
+    Loader,
+} from "../styles/Menus";
+import { useMenuHook } from "../hooks/Menu";
+import { IMenu } from "../interfaces";
+import LoaderAsset from "../asset/loading.gif";
 
 const Menus = () => {
+    const {
+        menuList,
+        handleSelectMenu,
+        selectedMenuList,
+        handleClickedNext,
+    } = useMenuHook();
+
     return (
         <Container>
             <Title>Hi, there!</Title>
@@ -12,14 +28,37 @@ const Menus = () => {
                 day?
             </Message>
             <SubContainer>
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {menuList.length > 0 ? (
+                    menuList.map((menu: IMenu) => {
+                        const { image, name, price, description } = menu;
+                        return (
+                            <Card
+                                key={name}
+                                handleClick={() =>
+                                    handleSelectMenu({
+                                        image,
+                                        name,
+                                        price,
+                                        description,
+                                    })
+                                }
+                                description={description}
+                                image={image}
+                                name={name}
+                                price={price}
+                            />
+                        );
+                    })
+                ) : (
+                    <Loader src={LoaderAsset} />
+                )}
             </SubContainer>
-            <FloatingButton isFinalButton={false} />
+            <FloatingButton
+                isFinalButton={false}
+                totalItems={selectedMenuList.length}
+                handleClicked={handleClickedNext}
+                isDisabled={selectedMenuList.length === 0}
+            />
         </Container>
     );
 };
